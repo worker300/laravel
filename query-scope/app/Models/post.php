@@ -2,15 +2,10 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\postcontroller;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class user extends Model
+class post extends Model
 {
     use HasFactory;
-
-    public function posts(){
-        return $this->hasMany(post::class);
-    }
 }
