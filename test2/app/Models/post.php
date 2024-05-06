@@ -9,11 +9,7 @@ class post extends Model
 {
     use HasFactory;
 
-    public function user(){
+    public function users(){
         return $this->belongsTo(user::class);
-    }
-
-    public function scopeActive ($query){
-        return $query->where('status',1);
     }
 }

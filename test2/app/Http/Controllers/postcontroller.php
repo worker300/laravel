@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\post;
 use Illuminate\Http\Request;
 
 class postcontroller extends Controller
@@ -13,12 +12,7 @@ class postcontroller extends Controller
      */
     public function index()
     {
-        $post  =post::withWhereHas('user',function($query){
-                 $query->active();
-        })->active()
-        ->get();
-
-        return $post;
+        //
     }
 
     /**

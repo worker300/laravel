@@ -15,4 +15,3 @@ Route::resource('post',postcontroller::class);
 
 
 
-Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam aliquid nostrum itaque inventore repudiandae quisquam. Est fugiat ratione soluta consequatur.
