@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\post;
 use Illuminate\Http\Request;
 
-class postcontroller extends Controller
+class usercontroller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
- 
-
+        return view('file-upload');
     }
 
     /**
@@ -31,7 +28,18 @@ class postcontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $file = $request->file('photo');
+        $request->validate([
+            'photo' => 'required | mimes:png,jpg,jpeg | max:3000 '
+        ]);
+
+        // $path = $request->file('photo')->store('image','public');
+
+        $filename = $file->getClientOriginalName();
+
+        $path = $request->file('photo')->storeAs('image', $filename , 'public');
+
+        return redirect()->route('user.index')->with('status', 'user image uploaded successfulyy');
     }
 
     /**
