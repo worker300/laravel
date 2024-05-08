@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\user;
 use Illuminate\Http\Request;
 
 class usercontroller extends Controller
@@ -12,7 +13,8 @@ class usercontroller extends Controller
      */
     public function index()
     {
-        return view('file-upload');
+        $users = user::get();
+        return view('file-upload', compact('users'));
     }
 
     /**
@@ -28,16 +30,35 @@ class usercontroller extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->file('photo');
         $request->validate([
             'photo' => 'required | mimes:png,jpg,jpeg | max:3000 '
         ]);
-
+        
+        // $file = $request->file('photo');
+        
+        // $extension = $file->hashName();
+        // $extension = $file->getSize();
+        // return $extension;
+        
+        
+        $path = $request->file('photo')->store('image','public');
+        user::create([
+            'file_name' => $path,
+        ]);
+        
         // $path = $request->file('photo')->store('image','public');
+        
+        // $filename =time() . '_' .  $file->getClientOriginalName();
+        // $path = $request->file('photo')->storeAs('image', $filename , 'public');
+        // return $path;
+       
+       
+        $file = $request->file('photo');
+        $file->move(public_path('uploads'),$file->getClientOriginalName());
+        user::create([
+            'file_name' => $file->getClientOriginalName(),
+        ]);
 
-        $filename = $file->getClientOriginalName();
-
-        $path = $request->file('photo')->storeAs('image', $filename , 'public');
 
         return redirect()->route('user.index')->with('status', 'user image uploaded successfulyy');
     }
@@ -55,7 +76,9 @@ class usercontroller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = user::find($id);
+
+        return view('file-update' , compact('user'));
     }
 
     /**
@@ -63,7 +86,26 @@ class usercontroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = user::find($id);
+
+        if($request->hasFile('photo')){
+
+            $image_path = public_path('storage/') . $user->file_name;
+
+            if(file_exists($image_path)){         
+                @unlink("$image_path");
+    
+            }
+
+            $path = $request->photo->store('image','public');
+                
+            $user->file_name = $path;
+            $user->save();
+
+            return redirect()->route('user.index')
+                ->with('status', 'user image                 updated successfulyy');
+
+        }
     }
 
     /**
@@ -71,6 +113,19 @@ class usercontroller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = user::find($id);
+
+        $user->delete();
+
+        $image_path = public_path('storage/') . $user->file_name;
+
+        if(file_exists($image_path)){
+            @unlink("$image_path");
+
+        }
+
+        return redirect()->route('user.index')
+                ->with('status', 'user image data deleted successfulyy');
+
     }
 }
