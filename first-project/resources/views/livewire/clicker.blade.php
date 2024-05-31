@@ -73,8 +73,7 @@
 
 
 
-
-wire:poll
+{{-- wire:poll
 wire:poll.10s
 wire:poll.keep-alive.10s
-wire:poll.visisble
+wire:poll.visible --}}
