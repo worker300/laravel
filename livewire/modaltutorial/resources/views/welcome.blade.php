@@ -24,12 +24,19 @@
 
         
         
-        <x-modal name="test" title="modal 2">
+        <x-modal name="test" title="modal 1">
             <x-slot:body>
-                <span  class="p-5">Body 2</span>
+                <span  class="p-5">test modal</span>
             </x-slot>
         </x-modal>
         
-        <button x-data x-on:click="$dispatch('open-modal', { name : 'test' })" class="px-3 py-1 bg-teal-500 text-white rounded ">open modal</button>
+        <x-modal name="modal2" title="modal2">
+            <x-slot:body>
+                <span  class="p-5">modal 2</span>
+            </x-slot>
+        </x-modal>
+        
+        <button x-data x-on:click="$dispatch('open-modal', { name : 'test' })" class="px-3 py-1 bg-teal-500 text-white rounded ">open modal 1</button>
+        <button x-data x-on:click="$dispatch('open-modal', { name : 'modal2' })" class="px-3 py-1 bg-blue-500 text-white rounded ">open modal 2</button>
     </body>
 </html>

@@ -11,14 +11,14 @@
     {{-- @livewire('counter') --}}
     {{-- @livewire('clicker') --}}
     
-    {{-- <div class="flex">
+    <div class="flex">
         <div class="w-2/4">
             @livewire('clicker')
         </div>
         <div class="w-2/4">
             @livewire('userslist' , ['lazy' => true])
         </div>
-    </div> --}}
+    </div>
 
     
 

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\user;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,6 +13,10 @@ class Userslist extends Component
 {
 
     use WithPagination;
+
+    #[Url()]        //to get data in url for other sessions
+    #[Url(as : 's')]    
+    #[Url(as : 's' , history : false , keep: true)]    
     public $search;
 
     public function placeholder(){
