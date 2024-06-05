@@ -16,13 +16,15 @@ class Clicker extends Component
     #[Validate('required')]
     public $name;
 
-    #[Validate('required | email')]
+    #[Validate('required | email' , as : 'your email+')]
     public $email;
     
     #[Validate('required ')]
     public $password;
 
-    #[Validate('nullable | image | max:1024')]
+    // #[Validate('nullable | image | max:1024')]
+    // public $image;
+    #[Validate(['image.*' => 'image | max:2048'])]
     public $image;
 
     public function createnewuser()
@@ -38,11 +40,13 @@ class Clicker extends Component
         // ]);
         
         $validated = $this->validate();
-
-        if($this->image){
-            $validated['image'] = $this->image->store('uploads' , 'public');
+         
+        if(is_array($this->image)){
+            foreach($this->image as $image){
+                $validated['image'] = $image->store('uploads' , 'public');
+            }
         }
-
+            
 
         // Create a new user
         $user = User::create($validated);
@@ -53,6 +57,13 @@ class Clicker extends Component
         session()->flash('success' , 'user has been created successfully');
 
         $this->dispatch('userlist' , $user);
+
+        $this->dispatch(
+            'alert' ,
+            type : 'success',    
+            title : 'post liked' ,   
+            position : 'center'  ,  
+        );
         
         // Optionally, you can emit an event or perform any additional actions after user creation
     }

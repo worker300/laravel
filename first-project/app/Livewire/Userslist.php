@@ -14,8 +14,8 @@ class Userslist extends Component
 
     use WithPagination;
 
-    #[Url()]        //to get data in url for other sessions
-    #[Url(as : 's')]    
+    // #[Url()]        //to get data in url for other sessions
+    // #[Url(as : 's')]    
     #[Url(as : 's' , history : false , keep: true)]    
     public $search;
 

@@ -7,7 +7,9 @@
     <title>{{ $title ?? config('app.name' , "laravel")  }}</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @livewireStyles
 </head>
 <body>
     
@@ -52,6 +54,9 @@
       <div>
         {{ $slot }}
       </div>
+
+
+      @livewireScripts
 
 </body>
 </html>
